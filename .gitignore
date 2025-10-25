@@ -1,4 +1,74 @@
-# Compiled class file
+# --- Общие системные файлы ---
+*.class
+*.log
+*.ctxt
+*.orig
+*.tmp
+*.swp
+*~
+
+# --- Директории сборки ---
+target/
+build/
+out/
+bin/
+
+# --- IntelliJ IDEA / JetBrains ---
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# --- Eclipse ---
+.project
+.classpath
+.settings/
+.metadata/
+.apt_generated/
+.factorypath/
+
+# --- VS Code ---
+.vscode/
+
+# --- Mac / Windows системные файлы ---
+.DS_Store
+Thumbs.db
+
+# --- Maven ---
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# --- Gradle ---
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+gradle-app.setting
+**/build/
+
+# --- Spring Boot ---
+# Временные файлы при запуске через Spring Boot
+.spring-boot-devtools.properties
+*.pid
+
+# --- Тесты ---
+# Результаты тестов
+test-output/
+surefire-reports/
+jacoco.exec
+
+# --- Logs ---
+*.log
+logs/
+log/
+logback.xml.bak
+
+# --- IDE кэш и прочее ---
+.idea_modules/
+rebel.xml
+*.launch
+
+# --- Docker ---
+/docker-comp# Compiled class file
 *.class
 
 # Log file
@@ -22,3 +92,14 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+ose.override.yml
+*.env
+.env.local
+
+# --- Node (если есть фронт внутри проекта) ---
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+dist/
+build/
