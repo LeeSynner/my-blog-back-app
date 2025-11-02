@@ -5,8 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.annotation.DirtiesContext;
+import ru.yandex.practicum.repository.CommentRepository;
 import ru.yandex.practicum.repository.PostRepository;
+import ru.yandex.practicum.repository.impl.JdbcNativeCommentRepository;
 import ru.yandex.practicum.repository.impl.JdbcNativePostRepository;
+import ru.yandex.practicum.service.CommentService;
 import ru.yandex.practicum.service.PostService;
 import ru.yandex.practicum.service.PostService;
 
@@ -38,5 +41,15 @@ public class TestConfig {
     @Bean
     public PostService postService(PostRepository postRepository) {
         return new PostService(postRepository);
+    }
+
+    @Bean
+    public CommentRepository commentRepository(JdbcTemplate jdbcTemplate) {
+        return new JdbcNativeCommentRepository(jdbcTemplate);
+    }
+
+    @Bean
+    public CommentService commentService(CommentRepository repository) {
+        return new CommentService(repository);
     }
 }
