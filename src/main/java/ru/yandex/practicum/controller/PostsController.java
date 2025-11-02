@@ -23,6 +23,7 @@ public class PostsController {
         return postService.findAll(search, pageNumber, pageSize);
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<Post> post(@PathVariable(name = "id") Long id) {
         Post post = postService.findById(id);

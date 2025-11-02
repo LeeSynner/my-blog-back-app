@@ -31,7 +31,7 @@ public class JdbcNativePostRepository implements PostRepository {
                 FROM posts as p
                 WHERE 1=1
                 """ + filter.sql +
-                " ORDER BY id DESC LIMIT ? OFFSET ?;";
+                " ORDER BY id ASC LIMIT ? OFFSET ?;";
 
         List<Object> params = new ArrayList<>(filter.params);
         params.add(pageSize);
