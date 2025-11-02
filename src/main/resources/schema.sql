@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS posts (
     text TEXT not null,
     tags varchar(500) NOT NULL DEFAULT '',
     likes_count INT DEFAULT 0,
-    comments_count INT DEFAULT 0
+    image_name VARCHAR(256)
 );
 
 CREATE TABLE IF NOT EXISTS comments (
@@ -18,6 +18,15 @@ CREATE TABLE IF NOT EXISTS comments (
             ON DELETE CASCADE
 );
 
-INSERT INTO posts(title, text, tags, likes_count, comments_count)
-    VALUES ('Название поста 1', 'Текст 1 поста в формате Markdown...', 'tag_1,tag_2', 5, 1),
-           ('Название поста 2', 'Текст 2 поста в формате Markdown...', '', 1, 5)
+
+INSERT INTO posts(title, text, tags, likes_count)
+    VALUES ('Название поста 1', 'Текст 1 поста в формате Markdown...', '#tag_1#tag_2#', 5),
+           ('Название поста 2', 'Текст 2 поста в формате Markdown...', '', 1);
+
+INSERT INTO comments(post_id, text)
+    VALUES (1, 'Комментарий 1 для поста 1'),
+           (2, 'Комментарий 1 для поста 2'),
+           (2, 'Комментарий 2 для поста 2'),
+           (2, 'Комментарий 3 для поста 2'),
+           (2, 'Комментарий 4 для поста 2'),
+           (2, 'Комментарий 5 для поста 2');
