@@ -1,5 +1,6 @@
 package ru.yandex.practicum.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,8 @@ import java.nio.file.Paths;
 @Service
 public class ImagesService {
 
-    public static final String UPLOAD_DIR = "uploads/images/";
+    @Value("${app.images.upload-dir}")
+    private String UPLOAD_DIR;
 
     PostRepository postRepository;
 
