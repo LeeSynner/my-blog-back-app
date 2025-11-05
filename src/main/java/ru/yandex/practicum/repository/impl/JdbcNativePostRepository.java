@@ -160,14 +160,13 @@ public class JdbcNativePostRepository implements PostRepository {
     }
 
     @Override
-    synchronized public void like(Long id) {
-        Post post = findById(id);
+    public void like(Long id) {
         String sql = """
                 UPDATE posts
-                SET likes_count = ?
+                SET likes_count = likes_count + 1
                 WHERE id = ?;
                 """;
-        jdbcTemplate.update(sql, post.getLikesCount() + 1, id);
+        jdbcTemplate.update(sql, id);
     }
 
     @Override
