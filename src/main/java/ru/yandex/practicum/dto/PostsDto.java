@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostsDto {
-    private List<Post> posts;
+    private List<PostDto> posts;
     private boolean hasPrev;
     private boolean hasNext;
     private int lastPage;

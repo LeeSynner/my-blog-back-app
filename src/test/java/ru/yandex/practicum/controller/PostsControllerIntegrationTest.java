@@ -10,7 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ru.yandex.practicum.configuration.TestConfig;
-import ru.yandex.practicum.model.Post;
+import ru.yandex.practicum.dto.PostDto;
 import ru.yandex.practicum.service.PostService;
 
 import java.util.List;
@@ -65,7 +65,7 @@ class PostsControllerIntegrationTest {
 
     @Test
     void testAddPost() throws Exception {
-        Post newPost = new Post();
+        PostDto newPost = new PostDto();
         newPost.setTitle("New post");
         newPost.setText("Some text");
         newPost.setTags(List.of("java"));
@@ -82,7 +82,7 @@ class PostsControllerIntegrationTest {
 
     @Test
     void testUpdatePost() throws Exception {
-        Post updated = new Post(1L, "Updated", "Updated text", List.of("tag"), 0, 0);
+        PostDto updated = new PostDto(1L, "Updated", "Updated text", List.of("tag"), 0, 0);
 
         mockMvc.perform(put("/api/posts/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)

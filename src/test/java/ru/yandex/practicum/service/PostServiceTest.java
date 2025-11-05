@@ -2,6 +2,7 @@ package ru.yandex.practicum.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.yandex.practicum.dto.PostDto;
 import ru.yandex.practicum.dto.PostsDto;
 import ru.yandex.practicum.model.Post;
 import ru.yandex.practicum.repository.PostRepository;
@@ -39,23 +40,25 @@ class PostServiceTest {
 
     @Test
     void findById_shouldReturnPost() {
-        Post post = new Post();
+        PostDto postDto = new PostDto();
+        Post post = PostService.toModel(postDto);
         when(postRepository.findById(1L)).thenReturn(post);
 
-        Post result = postService.findById(1L);
+        PostDto result = postService.findById(1L);
 
-        assertSame(post, result);
+        assertEquals(postDto, result);
         verify(postRepository).findById(1L);
     }
 
     @Test
     void save_shouldDelegateToRepository() {
-        Post post = new Post();
+        PostDto postDto = new PostDto();
+        Post post = PostService.toModel(postDto);
         when(postRepository.save(post)).thenReturn(post);
 
-        Post result = postService.save(post);
+        PostDto result = postService.save(postDto);
 
-        assertSame(post, result);
+        assertEquals(postDto, result);
         verify(postRepository).save(post);
     }
 
@@ -67,12 +70,13 @@ class PostServiceTest {
 
     @Test
     void update_shouldDelegateToRepository() {
-        Post post = new Post();
+        PostDto postDto = new PostDto();
+        Post post = PostService.toModel(postDto);
         when(postRepository.update(1L, post)).thenReturn(post);
 
-        Post result = postService.update(1L, post);
+        PostDto result = postService.update(1L, postDto);
 
-        assertSame(post, result);
+        assertEquals(postDto, result);
         verify(postRepository).update(1L, post);
     }
 

@@ -10,7 +10,6 @@ import ru.yandex.practicum.repository.PostRepository;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -43,9 +42,7 @@ public class JdbcNativePostRepository implements PostRepository {
                 rs.getLong("id"),
                         rs.getString("title"),
                         rs.getString("text"),
-                        Arrays.stream(rs.getString("tags").split("#"))
-                                .filter(s -> !s.isEmpty())
-                                .toList(),
+                        rs.getString("tags"),
                         rs.getInt("likes_count"),
                         rs.getInt("comments_count")),
                 params.toArray()
@@ -103,9 +100,7 @@ public class JdbcNativePostRepository implements PostRepository {
                 post.setId(rs.getLong("id"));
                 post.setTitle(rs.getString("title"));
                 post.setText(rs.getString("text"));
-                post.setTags(Arrays.stream(rs.getString("tags").split("#"))
-                        .filter(s -> !s.isEmpty())
-                        .toList());
+                post.setTags(rs.getString("tags"));
                 post.setLikesCount(rs.getInt("likes_count"));
                 post.setCommentsCount(rs.getInt("comments_count"));
                 return post;
@@ -122,14 +117,11 @@ public class JdbcNativePostRepository implements PostRepository {
                 """;
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        if (post.getTags() == null) {
-            post.setTags(List.of());
-        }
         jdbcTemplate.update(con -> {
             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, post.getTitle());
             ps.setString(2, post.getText());
-            ps.setString(3, "#" + String.join("#", post.getTags()) + "#");
+            ps.setString(3, post.getTags());
             ps.setInt(4, 0);
             return ps;
         }, keyHolder);
@@ -155,7 +147,7 @@ public class JdbcNativePostRepository implements PostRepository {
                 WHERE id = ?;
                 """;
 
-        jdbcTemplate.update(sql, post.getTitle(), post.getText(), "#" + String.join("#", post.getTags()) + "#", id);
+        jdbcTemplate.update(sql, post.getTitle(), post.getText(), post.getTags(), id);
         return findById(id);
     }
 

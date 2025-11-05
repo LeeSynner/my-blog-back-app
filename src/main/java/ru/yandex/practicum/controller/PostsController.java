@@ -2,11 +2,10 @@ package ru.yandex.practicum.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.dto.PostDto;
 import ru.yandex.practicum.dto.PostsDto;
 import ru.yandex.practicum.model.Post;
 import ru.yandex.practicum.service.PostService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -25,8 +24,8 @@ public class PostsController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> post(@PathVariable(name = "id") Long id) {
-        Post post = postService.findById(id);
+    public ResponseEntity<PostDto> post(@PathVariable(name = "id") Long id) {
+        PostDto post = postService.findById(id);
         if (post == null) {
             return ResponseEntity.notFound().build();
         }
@@ -34,13 +33,13 @@ public class PostsController {
     }
 
     @PostMapping
-    public Post save(@RequestBody Post post) {
-        return postService.save(post);
+    public PostDto save(@RequestBody PostDto postDto) {
+        return postService.save(postDto);
     }
 
     @PutMapping("/{id}")
-    public Post update(@PathVariable(name = "id") Long id, @RequestBody Post post) {
-        return postService.update(id, post);
+    public PostDto update(@PathVariable(name = "id") Long id, @RequestBody PostDto postDto) {
+        return postService.update(id, postDto);
     }
 
     @DeleteMapping("/{id}")
