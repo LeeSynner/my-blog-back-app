@@ -2,6 +2,7 @@ package ru.yandex.practicum.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.yandex.practicum.dto.CommentDto;
 import ru.yandex.practicum.model.Comment;
 import ru.yandex.practicum.repository.CommentRepository;
 
@@ -24,11 +25,11 @@ class CommentServiceTest {
     @Test
     void findAll_shouldReturnCommentsFromRepository() {
         Long postId = 1L;
-        List<Comment> expected = List.of(new Comment(), new Comment());
+        List<CommentDto> expected = List.of(new CommentDto(), new CommentDto());
 
-        when(commentRepository.findAll(postId)).thenReturn(expected);
+        when(commentRepository.findAll(postId)).thenReturn(expected.stream().map(CommentService::toModel).toList());
 
-        List<Comment> result = commentService.findAll(postId);
+        List<CommentDto> result = commentService.findAll(postId);
 
         assertEquals(expected, result);
         verify(commentRepository).findAll(postId);
@@ -38,25 +39,28 @@ class CommentServiceTest {
     void findById_shouldReturnCommentFromRepository() {
         Long postId = 1L;
         Long id = 2L;
-        Comment expected = new Comment();
+        CommentDto expected = new CommentDto();
+        Comment comment = CommentService.toModel(expected);
+        when(commentRepository.findById(postId, id)).thenReturn(comment);
 
-        when(commentRepository.findById(postId, id)).thenReturn(expected);
+        CommentDto result = commentService.findById(postId, id);
 
-        Comment result = commentService.findById(postId, id);
-
-        assertSame(expected, result);
+        assertEquals(expected, result);
         verify(commentRepository).findById(postId, id);
     }
 
     @Test
     void save_shouldDelegateToRepository() {
         Long postId = 1L;
-        Comment comment = new Comment();
-        Comment saved = new Comment();
+        CommentDto commentDto = new CommentDto();
+        CommentDto saved = new CommentDto();
+        Comment comment = CommentService.toModel(commentDto);
+        Comment savedComment = CommentService.toModel(saved);
 
-        when(commentRepository.save(postId, comment)).thenReturn(saved);
+        when(commentRepository.save(postId, comment))
+                .thenReturn(savedComment);
 
-        Comment result = commentService.save(postId, comment);
+        CommentDto result = commentService.save(postId, commentDto);
 
         assertEquals(saved, result);
         verify(commentRepository).save(postId, comment);
@@ -66,14 +70,17 @@ class CommentServiceTest {
     void update_shouldCallRepositoryUpdate() {
         Long postId = 1L;
         Long id = 10L;
-        Comment comment = new Comment();
-        Comment updated = new Comment();
+        CommentDto commentDto = new CommentDto();
+        CommentDto updatedDto = new CommentDto();
+
+        Comment comment = CommentService.toModel(commentDto);
+        Comment updated = CommentService.toModel(updatedDto);
 
         when(commentRepository.update(postId, id, comment)).thenReturn(updated);
 
-        Comment result = commentService.update(postId, id, comment);
+        CommentDto result = commentService.update(postId, id, commentDto);
 
-        assertSame(updated, result);
+        assertEquals(updatedDto, result);
         verify(commentRepository).update(postId, id, comment);
     }
 

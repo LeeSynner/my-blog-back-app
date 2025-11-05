@@ -1,15 +1,15 @@
-package ru.yandex.practicum.model;
+package ru.yandex.practicum.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Comment {
+public class CommentDto {
     private Long id;
     private String text;
     private Long postId;

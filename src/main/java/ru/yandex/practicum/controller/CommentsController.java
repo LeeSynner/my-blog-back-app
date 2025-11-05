@@ -2,7 +2,7 @@ package ru.yandex.practicum.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.model.Comment;
+import ru.yandex.practicum.dto.CommentDto;
 import ru.yandex.practicum.service.CommentService;
 
 import java.util.List;
@@ -18,27 +18,27 @@ public class CommentsController {
     }
 
     @GetMapping
-    public List<Comment> findAll(@PathVariable(name = "postId") Long postId) {
+    public List<CommentDto> findAll(@PathVariable(name = "postId") Long postId) {
         return commentService.findAll(postId);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Comment> findById(@PathVariable(name = "postId") Long postId, @PathVariable(name = "id") Long id) {
-        Comment comment = commentService.findById(postId, id);
-        if (comment == null) {
+    public ResponseEntity<CommentDto> findById(@PathVariable(name = "postId") Long postId, @PathVariable(name = "id") Long id) {
+        CommentDto commentDto = commentService.findById(postId, id);
+        if (commentDto == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(comment);
+        return ResponseEntity.ok(commentDto);
     }
 
     @PostMapping
-    public Comment save(@PathVariable(name = "postId") Long postId, @RequestBody Comment comment) {
-        return commentService.save(postId, comment);
+    public CommentDto save(@PathVariable(name = "postId") Long postId, @RequestBody CommentDto commentDto) {
+        return commentService.save(postId, commentDto);
     }
 
     @PutMapping("/{id}")
-    public Comment update(@PathVariable(name = "postId") Long postId, @PathVariable(name = "id") Long id, @RequestBody Comment comment) {
-        return commentService.update(postId, id, comment);
+    public CommentDto update(@PathVariable(name = "postId") Long postId, @PathVariable(name = "id") Long id, @RequestBody CommentDto commentDto) {
+        return commentService.update(postId, id, commentDto);
     }
 
     @DeleteMapping("/{id}")
