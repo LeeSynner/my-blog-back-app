@@ -1,10 +1,10 @@
 package ru.yandex.practicum.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.dto.PostDto;
 import ru.yandex.practicum.dto.PostsDto;
-import ru.yandex.practicum.model.Post;
 import ru.yandex.practicum.service.PostService;
 
 @RestController
@@ -22,7 +22,6 @@ public class PostsController {
         return postService.findAll(search, pageNumber, pageSize);
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> post(@PathVariable(name = "id") Long id) {
         PostDto post = postService.findById(id);
@@ -33,12 +32,12 @@ public class PostsController {
     }
 
     @PostMapping
-    public PostDto save(@RequestBody PostDto postDto) {
+    public PostDto save(@Valid @RequestBody PostDto postDto) {
         return postService.save(postDto);
     }
 
     @PutMapping("/{id}")
-    public PostDto update(@PathVariable(name = "id") Long id, @RequestBody PostDto postDto) {
+    public PostDto update(@PathVariable(name = "id") Long id, @Valid @RequestBody PostDto postDto) {
         return postService.update(id, postDto);
     }
 
